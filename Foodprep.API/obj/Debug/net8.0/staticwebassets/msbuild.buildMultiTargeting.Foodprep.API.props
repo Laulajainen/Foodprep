@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\Foodprep.API.props" />
+</Project>

@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35201.131
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Foodprep.API", "Foodprep.API\Foodprep.API.csproj", "{1DC70A27-E248-439F-A29C-316281BC75DC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1DC70A27-E248-439F-A29C-316281BC75DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1DC70A27-E248-439F-A29C-316281BC75DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1DC70A27-E248-439F-A29C-316281BC75DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1DC70A27-E248-439F-A29C-316281BC75DC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {276FAE08-B4B1-43F5-B2CF-67D83F1AE91D}
+	EndGlobalSection
+EndGlobal
