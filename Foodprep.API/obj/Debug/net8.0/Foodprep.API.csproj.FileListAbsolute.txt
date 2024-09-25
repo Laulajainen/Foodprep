@@ -17,6 +17,7 @@ C:\Users\oskar\Documents\VScode\Foodprep\Foodprep.API\obj\Debug\net8.0\Foodprep.
 C:\Users\oskar\Documents\VScode\Foodprep\Foodprep.API\obj\Debug\net8.0\Foodprep.API.csproj.CoreCompileInputs.cache
 C:\Users\oskar\Documents\VScode\Foodprep\Foodprep.API\obj\Debug\net8.0\Foodprep.API.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\oskar\Documents\VScode\Foodprep\Foodprep.API\obj\Debug\net8.0\Foodprep.API.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\oskar\Documents\VScode\Foodprep\Foodprep.API\obj\Debug\net8.0\Foodprep.API.sourcelink.json
 C:\Users\oskar\Documents\VScode\Foodprep\Foodprep.API\obj\Debug\net8.0\staticwebassets.build.json
 C:\Users\oskar\Documents\VScode\Foodprep\Foodprep.API\obj\Debug\net8.0\staticwebassets.development.json
 C:\Users\oskar\Documents\VScode\Foodprep\Foodprep.API\obj\Debug\net8.0\staticwebassets\msbuild.Foodprep.API.Microsoft.AspNetCore.StaticWebAssets.props
