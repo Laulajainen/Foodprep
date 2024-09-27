@@ -1,14 +1,14 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\samba\\source\\repos\\Foodprep\\",
+  "WorkspaceRootPath": "C:\\Users\\oskar\\Documents\\VScode\\Foodprep\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\samba\\source\\repos\\Foodprep\\Foodprep.API\\Program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Foodprep.API\\Program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{1DC70A27-E248-439F-A29C-316281BC75DC}|Foodprep.API\\Foodprep.API.csproj|c:\\users\\oskar\\documents\\vscode\\foodprep\\foodprep.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1DC70A27-E248-439F-A29C-316281BC75DC}|Foodprep.API\\Foodprep.API.csproj|solutionrelative:foodprep.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\samba\\source\\repos\\Foodprep\\Foodprep.API\\Properties\\launchSettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Foodprep.API\\Properties\\launchSettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{1DC70A27-E248-439F-A29C-316281BC75DC}|Foodprep.API\\Foodprep.API.csproj|c:\\users\\oskar\\documents\\vscode\\foodprep\\foodprep.api\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{1DC70A27-E248-439F-A29C-316281BC75DC}|Foodprep.API\\Foodprep.API.csproj|solutionrelative:foodprep.api\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     }
   ],
   "DocumentGroupContainers": [
@@ -20,10 +20,6 @@
           "DockedWidth": 200,
           "SelectedChildIndex": 16,
           "Children": [
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
-            },
             {
               "$type": "Bookmark",
               "Name": "ST:131:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
@@ -62,6 +58,10 @@
             },
             {
               "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
               "Name": "ST:1:0:{e8b06f52-6d01-11d2-aa7d-00c04f990343}"
             },
             {
@@ -88,11 +88,11 @@
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\samba\\source\\repos\\Foodprep\\Foodprep.API\\Program.cs",
+              "DocumentMoniker": "C:\\Users\\oskar\\Documents\\VScode\\Foodprep\\Foodprep.API\\Program.cs",
               "RelativeDocumentMoniker": "Foodprep.API\\Program.cs",
-              "ToolTip": "C:\\Users\\samba\\source\\repos\\Foodprep\\Foodprep.API\\Program.cs",
+              "ToolTip": "C:\\Users\\oskar\\Documents\\VScode\\Foodprep\\Foodprep.API\\Program.cs",
               "RelativeToolTip": "Foodprep.API\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAVAAAAAAAAAA==",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABYAAAAVAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-23T08:59:53.732Z",
               "EditorCaption": ""
@@ -101,13 +101,14 @@
               "$type": "Document",
               "DocumentIndex": 1,
               "Title": "launchSettings.json",
-              "DocumentMoniker": "C:\\Users\\samba\\source\\repos\\Foodprep\\Foodprep.API\\Properties\\launchSettings.json",
+              "DocumentMoniker": "C:\\Users\\oskar\\Documents\\VScode\\Foodprep\\Foodprep.API\\Properties\\launchSettings.json",
               "RelativeDocumentMoniker": "Foodprep.API\\Properties\\launchSettings.json",
-              "ToolTip": "C:\\Users\\samba\\source\\repos\\Foodprep\\Foodprep.API\\Properties\\launchSettings.json",
+              "ToolTip": "C:\\Users\\oskar\\Documents\\VScode\\Foodprep\\Foodprep.API\\Properties\\launchSettings.json",
               "RelativeToolTip": "Foodprep.API\\Properties\\launchSettings.json",
               "ViewState": "AQIAAAkAAAAAAAAAAAAAABYAAAAfAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2024-09-23T08:02:33.816Z"
+              "WhenOpened": "2024-09-23T08:02:33.816Z",
+              "EditorCaption": ""
             }
           ]
         }
