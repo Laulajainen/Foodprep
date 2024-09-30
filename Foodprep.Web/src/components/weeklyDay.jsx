@@ -95,6 +95,12 @@ function DayModal({ day }) {
           <div className="modal-content">
             <div className="modal-header">
               <h2 className="modal-title">{day}</h2>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
             </div>
             <div className="modal-body">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora
