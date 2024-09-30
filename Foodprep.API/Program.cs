@@ -11,6 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<MealContext>(o => o.UseMySql(connectionString,
     new MySqlServerVersion(new Version(8, 0, 21))));
@@ -38,9 +39,11 @@ if (app.Environment.IsDevelopment())
 app.UseCors("AllowAll");
 app.UseHttpsRedirection();
 
+// Get all meals
 app.MapGet("/api/Meals", GetAllMeals);
 
-async Task<List<Meal>>  GetAllMeals(MealContext db)
+// Method that returns all meals
+async Task<List<Meal>> GetAllMeals(MealContext db) 
 {
     return await db.Meals.ToListAsync();
 }
