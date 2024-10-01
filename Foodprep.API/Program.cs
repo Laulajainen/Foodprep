@@ -1,9 +1,21 @@
+using Foodprep.API;
+using Microsoft.EntityFrameworkCore;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
+
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// Add services to the container.
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext<MealContext>(o => o.UseMySql(connectionString,
+    new MySqlServerVersion(new Version(8, 0, 21))));
+
 
 builder.Services.AddCors(options =>
 {
@@ -25,8 +37,15 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCors("AllowAll");
-
 app.UseHttpsRedirection();
 
+// Get all meals
+app.MapGet("/api/Meals", GetAllMeals);
+
+// Method that returns all meals
+async Task<List<Meal>> GetAllMeals(MealContext db) 
+{
+    return await db.Meals.ToListAsync();
+}
 
 app.Run();
