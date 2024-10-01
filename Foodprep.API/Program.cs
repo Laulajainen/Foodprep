@@ -15,6 +15,9 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<MealContext>(o => o.UseMySql(connectionString,
     new MySqlServerVersion(new Version(8, 0, 21))));
 
+builder.Services.AddDbContext<DayContext>(options => options.UseMySql(connectionString,
+    new MySqlServerVersion(new Version(8, 0, 21))));
+
 
 builder.Services.AddCors(options =>
 {
@@ -39,10 +42,16 @@ app.UseCors("AllowAll");
 app.UseHttpsRedirection();
 
 app.MapGet("/api/Meals", GetAllMeals);
+app.MapGet("/api/Days", GetAllDays);
 
 async Task<List<Meal>>  GetAllMeals(MealContext db)
 {
     return await db.Meals.ToListAsync();
+}
+
+async Task<List<Days>> GetAllDays(DayContext dayContext)
+{
+    return await dayContext.Days.ToListAsync();
 }
 
 app.Run();
