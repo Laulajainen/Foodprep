@@ -1,28 +1,34 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
-const WeekNavigator = () => {
+const WeekNavigator = ({ onWeekChange }) => {
     const [currentWeek, setCurrentWeek] = useState(0);
 
     const handlePreviousWeek = () => {
-        setCurrentWeek(currentWeek - 1);
+        setCurrentWeek(prevWeek => prevWeek - 1);
     };
 
     const handleNextWeek = () => {
-        setCurrentWeek(currentWeek + 1);
+        setCurrentWeek(prevWeek => prevWeek + 1);
     };
 
-useEffect(() => {
-    const getCurrentWeek = () => {
-        const now = new Date();
-        const start = new Date(now.getFullYear(), 0, 1);
-        const diff = now - start + ((start.getTimezoneOffset() - now.getTimezoneOffset()) * 60 * 1000);
-        const oneWeek = 1000 * 60 * 60 * 24 * 7;
-        const week = Math.floor(diff / oneWeek);
-        return week;
-    };
+    useEffect(() => {
+        const getCurrentWeek = () => {
+            const now = new Date();
+            const start = new Date(now.getFullYear(), 0, 1);
+            const diff = now - start + ((start.getTimezoneOffset() - now.getTimezoneOffset()) * 60 * 1000);
+            const oneWeek = 1000 * 60 * 60 * 24 * 7;
+            const week = Math.floor(diff / oneWeek);
+            return week;
+        };
 
-    setCurrentWeek(getCurrentWeek());
-}, []);
+        const initialWeek = getCurrentWeek();
+        setCurrentWeek(initialWeek);
+        onWeekChange(initialWeek);
+    }, [onWeekChange]);
+
+    useEffect(() => {
+        onWeekChange(currentWeek);
+    }, [currentWeek, onWeekChange]);
 
     return (
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -31,7 +37,6 @@ useEffect(() => {
             <button onClick={handleNextWeek}>&gt;</button>
         </div>
     );
-    
 };
 
 export default WeekNavigator;
