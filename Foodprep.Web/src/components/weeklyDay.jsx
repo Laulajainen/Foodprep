@@ -18,15 +18,19 @@ const days = [
 export default function WeeklyDay() {
   const [selectedDay, setSelectedDay] = useState(""); // track the selected day
   const [currentWeek, setCurrentWeek] = useState(0); // track the current week
+  const [weekDays, setWeekDays] = useState([]); // track the days for the current week
 
   const handleWeekChange = useCallback((week) => {
     setCurrentWeek(week);
-    // Add any additional logic to render the right days based on the current week
+  }, []);
+
+  const handleDaysChange = useCallback((days) => {
+    setWeekDays(days);
   }, []);
 
   return (
     <div>
-      <WeekNavigator onWeekChange={handleWeekChange} />
+      <WeekNavigator onWeekChange={handleWeekChange} onDaysChange={handleDaysChange} />
       {/* // Render the list of days */}
       <Day setSelectedDay={setSelectedDay} />
       {/* // Render the modal with details of selected day */}

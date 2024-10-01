@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 
-const WeekNavigator = ({ onWeekChange }) => {
+const WeekNavigator = ({ onWeekChange, onDaysChange }) => {
     const [currentWeek, setCurrentWeek] = useState(0);
 
     const handlePreviousWeek = () => {
@@ -30,6 +31,22 @@ const WeekNavigator = ({ onWeekChange }) => {
         onWeekChange(currentWeek);
     }, [currentWeek, onWeekChange]);
 
+    useEffect(() => {
+        const fetchDays = async () => {
+            try {
+                const response = await fetch(`https://localhost:7055/api/Days/${currentWeek}`);
+                const data = await response.json();
+                onDaysChange(data);
+            } catch (error) {
+                console.error('Error fetching days:', error);
+            }
+        };
+
+        if (currentWeek > 0) {
+            fetchDays();
+        }
+    }, [currentWeek, onDaysChange]);
+
     return (
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <button onClick={handlePreviousWeek}>&lt;</button>
@@ -37,6 +54,11 @@ const WeekNavigator = ({ onWeekChange }) => {
             <button onClick={handleNextWeek}>&gt;</button>
         </div>
     );
+};
+
+WeekNavigator.propTypes = {
+    onWeekChange: PropTypes.func.isRequired,
+    onDaysChange: PropTypes.func.isRequired,
 };
 
 export default WeekNavigator;
