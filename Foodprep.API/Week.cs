@@ -1,5 +1,8 @@
-public class Week
+namespace Foodprep.API
 {
-    public int WeekID { get; set; }
-    public int WeekNumber { get; set; }
+    public class Week
+    {
+        public int weekID { get; set; }
+        public int weekNumber { get; set; }
+    }
 }

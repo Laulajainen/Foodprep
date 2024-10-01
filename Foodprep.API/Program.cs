@@ -15,6 +15,9 @@ builder.Services.AddDbContext<MealContext>(o => o.UseMySql(connectionString,
     new MySqlServerVersion(new Version(8, 0, 21))));
 builder.Services.AddDbContext<WeekContext>(o => o.UseMySql(connectionString,
     new MySqlServerVersion(new Version(8, 0, 21))));
+builder.Services.AddDbContext<DayContext>(options => options.UseMySql(connectionString,
+    new MySqlServerVersion(new Version(8, 0, 21))));
+
 
 builder.Services.AddCors(options =>
 {
@@ -39,6 +42,7 @@ app.UseCors("AllowAll");
 app.UseHttpsRedirection();
 
 app.MapGet("/api/Meals", GetAllMeals);
+app.MapGet("/api/Days", GetAllDays);
 
 app.MapGet("/api/Weeks", GetAllWeeks);
 
@@ -47,6 +51,11 @@ app.MapGet("/api/Weeks/{id}", GetWeekById);
 async Task<List<Meal>> GetAllMeals(MealContext db)
 {
     return await db.Meals.ToListAsync();
+}
+
+async Task<List<Days>> GetAllDays(DayContext dayContext)
+{
+    return await dayContext.Days.ToListAsync();
 }
 
 async Task<List<Week>> GetAllWeeks(WeekContext db)
