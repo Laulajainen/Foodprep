@@ -1,6 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
-import { useState } from "react";
+import "bootstrap-select/dist/css/bootstrap-select.min.css";
+import { useState, useEffect } from "react";
 
 // List of days
 const days = [
@@ -79,6 +80,50 @@ function Day({ setSelectedDay }) {
 
 // Modal that shows the day's details
 function DayModal({ day }) {
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    fetch("https://localhost:7055/api/Meals")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setData(data);
+      })
+      .catch((error) => console.error("Error fetching data:", error));
+  }, []);
+
+  const handleSave = () => {
+    const selectedDayIndex = days.indexOf(day);
+
+    if (selectedMealId != null) {
+      fetch("https://localhost:7055/api/DayMeals", {
+        method: "POST",
+        body: JSON.stringify({
+          day: selectedDayIndex,
+          mealId: selectedMealId,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Failed to save meal");
+          }
+          return response.json();
+        })
+        .then((result) => {
+          console.log("Success:", result);
+        })
+        .catch((error) => console.error("Error saving meal:", error));
+    } else {
+      console.log("Please select a meal");
+    }
+  };
   return (
     <>
       <div
@@ -103,16 +148,47 @@ function DayModal({ day }) {
               ></button>
             </div>
             <div className="modal-body">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora
-              ex temporibus nam laborum voluptatibus, soluta repudiandae
-              doloremque, nobis recusandae tenetur, omnis cumque deserunt
-              nesciunt illum enim. Et vel distinctio omnis. Lorem ipsum dolor
-              sit amet consectetur adipisicing elit. Tempora ex temporibus nam
-              laborum voluptatibus, soluta repudiandae doloremque, nobis
-              recusandae tenetur, omnis cumque deserunt nesciunt illum enim. Et
+              <div className="choose-meal">
+                <select
+                  onChange={(e) => setSelectedMealId(e.target.value)}
+                  className="form-select"
+                  aria-label="Default select example"
+                  style={
+                    {
+                      // fontSize: "0.9rem",
+                      // width: "100%",
+                      // overflowX: "hidden",
+                      // backgroundColor: "#fff",
+                      // color: "#000",
+                      // overFlowX: "auto",
+                      // maxWidth: "1rem",
+                    }
+                  }
+                >
+                  <option defaultValue>Choose meal</option>
+                  {data &&
+                    data.map((meal) => (
+                      <option
+                        key={meal.nummer}
+                        value={meal.nummer}
+                        style={{
+                          wordWrap: "breakWord",
+                          // whiteSpace: "wrap",
+                          // textOverflow: "ellipsis",
+                        }}
+                      >
+                        {meal.namn}
+                      </option>
+                    ))}
+                </select>
+              </div>
             </div>
             <div className="modal-footer">
-              <button type="button" className="btn btn-primary">
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={handleSave}
+              >
                 Save
               </button>
               <button
