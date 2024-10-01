@@ -39,14 +39,18 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCors("AllowAll");
+
 app.UseHttpsRedirection();
 
 app.MapGet("/api/Meals", GetAllMeals);
+
 app.MapGet("/api/Days", GetAllDays);
 
 app.MapGet("/api/Weeks", GetAllWeeks);
 
 app.MapGet("/api/Weeks/{id}", GetWeekById);
+
+app.MapGet("/api/Days/{week}", GetAllDaysByWeek);
 
 async Task<List<Meal>> GetAllMeals(MealContext db)
 {
@@ -56,6 +60,12 @@ async Task<List<Meal>> GetAllMeals(MealContext db)
 async Task<List<Days>> GetAllDays(DayContext dayContext)
 {
     return await dayContext.Days.ToListAsync();
+}
+
+async Task<IResult> GetAllDaysByWeek(int week, DayContext dayContext)
+{
+    var days = await dayContext.Days.Where(d => d.weekID == week).ToListAsync();
+    return days != null ? Results.Ok(days) : Results.NotFound();
 }
 
 async Task<List<Week>> GetAllWeeks(WeekContext db)
