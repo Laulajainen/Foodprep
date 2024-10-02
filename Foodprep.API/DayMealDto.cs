@@ -1,8 +1,8 @@
 ﻿namespace Foodprep.API
 {
-    public class DayMeal
+    public class DayMealDto
     {
-        public int daysID {  get; set; }
+        public int dayID { get; set; }
         public int mealID { get; set; }
     }
 }

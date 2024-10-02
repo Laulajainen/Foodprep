@@ -18,7 +18,6 @@ builder.Services.AddDbContext<WeekContext>(o => o.UseMySql(connectionString,
 builder.Services.AddDbContext<DayContext>(options => options.UseMySql(connectionString,
     new MySqlServerVersion(new Version(8, 0, 21))));
 
-
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", builder =>
@@ -52,6 +51,8 @@ app.MapGet("/api/Weeks/{id}", GetWeekById);
 
 app.MapGet("/api/Days/{week}", GetAllDaysByWeek);
 
+app.MapPost("/api/DayMeals", SaveDayMeal);
+
 async Task<List<Meal>> GetAllMeals(MealContext db)
 {
     return await db.Meals.ToListAsync();
@@ -77,6 +78,23 @@ async Task<IResult> GetWeekById(int id, WeekContext db)
 {
     var week = await db.Weeks.FindAsync(id);
     return week != null ? Results.Ok(week) : Results.NotFound();
+}
+
+async Task<IResult> SaveDayMeal(DayMeal dayMeal, DayContext dayContext, MealContext mealContext)
+{
+    // Ensure both day and meal exist in the database
+    var day = await dayContext.Days.FirstOrDefaultAsync(d => d.daysID == dayMeal.daysID);
+    var meal = await mealContext.Meals.FirstOrDefaultAsync(n => n.nummer == dayMeal.mealID);
+
+    if (day == null || meal == null)
+    {
+        return Results.NotFound("Day or Meal not found");
+    }
+
+    dayContext.DayMeals.Add(dayMeal); // Add the new dayMeal entry
+    await dayContext.SaveChangesAsync(); // Save changes to the database
+
+    return Results.Ok(dayMeal);
 }
 
 app.Run();
