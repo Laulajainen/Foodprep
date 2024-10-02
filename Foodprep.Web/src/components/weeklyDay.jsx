@@ -1,6 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
-import { useState } from "react";
+import { useState, useCallback } from "react";
+import WeekNavigator from "./weekNavigator";
 
 // List of days
 const days = [
@@ -16,8 +17,20 @@ const days = [
 // Main component
 export default function WeeklyDay() {
   const [selectedDay, setSelectedDay] = useState(""); // track the selected day
+  const [currentWeek, setCurrentWeek] = useState(0); // track the current week
+  const [weekDays, setWeekDays] = useState([]); // track the days for the current week
+
+  const handleWeekChange = useCallback((week) => {
+    setCurrentWeek(week);
+  }, []);
+
+  const handleDaysChange = useCallback((days) => {
+    setWeekDays(days);
+  }, []);
+
   return (
     <div>
+      <WeekNavigator onWeekChange={handleWeekChange} onDaysChange={handleDaysChange} />
       {/* // Render the list of days */}
       <Day setSelectedDay={setSelectedDay} />
       {/* // Render the modal with details of selected day */}
