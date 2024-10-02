@@ -20,12 +20,21 @@ export default function WeeklyDay() {
   return (
     <div>
       {/* // Render the list of days */}
-      <Day setSelectedDay={setSelectedDay} />
+      <div>
+        <ul style={styles.days}>
+          {days.map((day) => (
+            <DayButton key={day} day={day} setSelectedDay={setSelectedDay} />
+          ))}
+        </ul>
+      </div>
       {/* // Render the modal with details of selected day */}
       <DayModal day={selectedDay} />
     </div>
   );
 }
+const truncateText = (text, maxLength) => {
+  return text.length > maxLength ? text.substring(0, maxLength) + "..." : text;
+};
 
 // Styling
 const styles = {
@@ -62,19 +71,6 @@ function DayButton({ day, setSelectedDay }) {
     >
       {day}
     </button>
-  );
-}
-
-// Render list of days as buttons
-function Day({ setSelectedDay }) {
-  return (
-    <div>
-      <ul style={styles.days}>
-        {days.map((day) => (
-          <DayButton key={day} day={day} setSelectedDay={setSelectedDay} />
-        ))}
-      </ul>
-    </div>
   );
 }
 
@@ -125,83 +121,60 @@ function DayModal({ day }) {
     }
   };
   return (
-    <>
-      <div
-        className="modal fade"
-        id="dayModal"
-        key="dayModal"
-        role="dialog"
-        tabIndex="-1"
-        style={{ backgroundColor: "rgba(226,232,240,0.8)" }}
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h2 className="modal-title">{day}</h2>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div className="modal-body">
-              <div className="choose-meal">
-                <select
-                  onChange={(e) => setSelectedMealId(e.target.value)}
-                  className="form-select"
-                  aria-label="Default select example"
-                  style={
-                    {
-                      // fontSize: "0.9rem",
-                      // width: "100%",
-                      // overflowX: "hidden",
-                      // backgroundColor: "#fff",
-                      // color: "#000",
-                      // overFlowX: "auto",
-                      // maxWidth: "1rem",
-                    }
-                  }
-                >
-                  <option defaultValue>Choose meal</option>
-                  {data &&
-                    data.map((meal) => (
-                      <option
-                        key={meal.nummer}
-                        value={meal.nummer}
-                        style={{
-                          wordWrap: "breakWord",
-                          // whiteSpace: "wrap",
-                          // textOverflow: "ellipsis",
-                        }}
-                      >
-                        {meal.namn}
-                      </option>
-                    ))}
-                </select>
-              </div>
-            </div>
-            <div className="modal-footer">
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={handleSave}
-              >
-                Save
-              </button>
-              <button
-                type="button"
-                className="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Discard
-              </button>
-            </div>
+    <div
+      className="modal fade"
+      id="dayModal"
+      key="dayModal"
+      role="dialog"
+      tabIndex="-1"
+      style={{ backgroundColor: "rgba(226,232,240,0.8)" }}
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div className="modal-dialog modal-dialog-centered modal-lg">
+        <div className="modal-content">
+          <div className="modal-header">
+            <h2 className="modal-title">{day}</h2>
+            <button
+              type="button"
+              className="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div className="modal-body">
+            <select
+              onChange={(e) => setSelectedMealId(e.target.value)}
+              className="form-select w-100"
+              aria-label="Default select example"
+              style={{ marginTop: "13rem" }}
+            >
+              <option defaultValue>Choose meal</option>
+              {data?.map((meal) => (
+                <option key={meal.nummer} value={meal.nummer}>
+                  {truncateText(meal.namn, 40)}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="modal-footer">
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={handleSave}
+            >
+              Save
+            </button>
+            <button
+              type="button"
+              className="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Discard
+            </button>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
