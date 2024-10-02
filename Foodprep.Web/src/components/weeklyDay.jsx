@@ -1,7 +1,9 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "bootstrap-select/dist/css/bootstrap-select.min.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
+// import { useState, useCallback } from "react";
+import WeekNavigator from "./weekNavigator";
 
 // List of days
 const days = [
@@ -17,8 +19,23 @@ const days = [
 // Main component
 export default function WeeklyDay() {
   const [selectedDay, setSelectedDay] = useState(""); // track the selected day
+  const [currentWeek, setCurrentWeek] = useState(0); // track the current week
+  const [weekDays, setWeekDays] = useState([]); // track the days for the current week
+
+  const handleWeekChange = useCallback((week) => {
+    setCurrentWeek(week);
+  }, []);
+
+  const handleDaysChange = useCallback((days) => {
+    setWeekDays(days);
+  }, []);
+
   return (
     <div>
+      <WeekNavigator
+        onWeekChange={handleWeekChange}
+        onDaysChange={handleDaysChange}
+      />
       {/* // Render the list of days */}
       <div>
         <ul style={styles.days}>
@@ -28,7 +45,7 @@ export default function WeeklyDay() {
         </ul>
       </div>
       {/* // Render the modal with details of selected day */}
-      <DayModal day={selectedDay} />
+      <DayModal day={selectedDay} currentWeek={currentWeek} />
     </div>
   );
 }
@@ -75,8 +92,9 @@ function DayButton({ day, setSelectedDay }) {
 }
 
 // Modal that shows the day's details
-function DayModal({ day }) {
+function DayModal({ day, currentWeek }) {
   const [data, setData] = useState(null);
+  const [selectedMealId, setSelectedMealId] = useState(null);
 
   useEffect(() => {
     fetch("https://localhost:7055/api/Meals")
@@ -93,14 +111,18 @@ function DayModal({ day }) {
   }, []);
 
   const handleSave = () => {
-    const selectedDayIndex = days.indexOf(day);
+    // const selectedDayIndex = days.indexOf(day);
+    const selectedDate = new Date(); // You need the current date in your app's logic
+    const startOfYear = new Date(selectedDate.getFullYear(), 0, 1); // January 1st
+    const dayOfYear =
+      Math.floor((selectedDate - startOfYear) / (1000 * 60 * 60 * 24)) + 1; // 1-365/366
 
     if (selectedMealId != null) {
       fetch("https://localhost:7055/api/DayMeals", {
         method: "POST",
         body: JSON.stringify({
-          day: selectedDayIndex,
-          mealId: selectedMealId,
+          daysID: dayOfYear,
+          mealID: selectedMealId,
         }),
         headers: {
           "Content-Type": "application/json",
