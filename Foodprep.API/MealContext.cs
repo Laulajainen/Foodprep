@@ -17,9 +17,9 @@ namespace Foodprep.API
         override protected void OnModelCreating(ModelBuilder modelBuilder)
     {
             modelBuilder.Entity<Meal>().HasKey(m => m.nummer);
-            modelBuilder.Entity<Meal>().HasData(
+        //    modelBuilder.Entity<Meal>().HasData(
           
-        );
+        //);
 
 
     }
