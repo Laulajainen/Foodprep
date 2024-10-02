@@ -13,7 +13,7 @@ namespace Foodprep.API
         public MealContext(DbContextOptions<MealContext> options) : base(options)
         {
         }
-
+        
         // OnModelCreating is a method that is called when the model for a derived context has been initialized
         override protected void OnModelCreating(ModelBuilder modelBuilder)
         {
