@@ -1,11 +1,13 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { View, StyleSheet } from 'react-native';
+import AppHeader from './components/appHeader';
+import WeeklyDay from './components/weeklyDay';
 
-export default function App() {
+function App() {
   return (
     <View style={styles.container}>
-      <Text>HALLÅ!</Text>
-      <StatusBar style="auto" />
+      <AppHeader />
+      <WeeklyDay />
     </View>
   );
 }
@@ -13,8 +15,8 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    padding: 20,
   },
 });
+
+export default App;
