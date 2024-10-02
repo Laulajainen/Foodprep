@@ -36,7 +36,9 @@ const WeekNavigator = ({ onWeekChange, onDaysChange }) => {
         const fetchDays = async () => {
             try {
                 console.log(`Fetching days for week: ${currentWeek}`);
-                const response = await fetch(`http://192.168.0.15:7055/api/Days/${currentWeek}`); // Changed to HTTP
+                // change the ip adress to your local ipv4 adress
+                const ip = "192.168.0.15"
+                const response = await fetch(`http://${ip}:7055/api/Days/${currentWeek}`);
                 console.log('Response status:', response.status);
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
