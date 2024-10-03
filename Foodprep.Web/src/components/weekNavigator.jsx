@@ -48,9 +48,9 @@ const WeekNavigator = ({ onWeekChange, onDaysChange }) => {
     }, [currentWeek, onDaysChange]);
 
     return (
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center',  }}>
             <button onClick={handlePreviousWeek}>&lt;</button>
-            <span style={{ margin: '0 20px' }}>Week {currentWeek}</span>
+            <span style={{ margin: '0 20px', color:"#794d79", }}>Week {currentWeek}</span>
             <button onClick={handleNextWeek}>&gt;</button>
         </div>
     );

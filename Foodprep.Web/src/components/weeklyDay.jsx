@@ -43,17 +43,23 @@ export default function WeeklyDay() {
 const styles = {
   days: {
     display: "flex",
+    flexWrap: "wrap",
+    gab: "10px",
     justifyContent: "center",
-    alignItems: "center",
-    flexDirection: "column",
-    paddingRight: "20px",
+    // alignItems: "center",
+    // flexDirection: "column",
+    padding: "0",
+    // paddingRight: "20px",
+    
   },
   dayButton: {
-    margin: "20px",
-    width: "200px",
+    margin: "10px",
+    minWidth: "150px",
     borderRadius: "5px",
-    backgroundColor: "#84cc16",
+    backgroundColor: "#d9c6d9",
     fontSize: "24px",
+    border: "1px solid #794d79",
+    color: "#794d79"
   },
 };
 
