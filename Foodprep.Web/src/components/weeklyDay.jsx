@@ -1,6 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
-import "bootstrap-select/dist/css/bootstrap-select.min.css";
+// import "bootstrap-select/dist/css/bootstrap-select.min.css";
 import { useState, useEffect, useCallback } from "react";
 // import { useState, useCallback } from "react";
 import WeekNavigator from "./weekNavigator";
@@ -21,6 +21,7 @@ export default function WeeklyDay() {
   const [selectedDay, setSelectedDay] = useState(""); // track the selected day
   const [currentWeek, setCurrentWeek] = useState(0); // track the current week
   const [weekDays, setWeekDays] = useState([]); // track the days for the current week
+  const [isMobileView, setIsMobileView] = useState(false); // Track viewport size
 
   const handleWeekChange = useCallback((week) => {
     setCurrentWeek(week);
@@ -28,6 +29,21 @@ export default function WeeklyDay() {
 
   const handleDaysChange = useCallback((days) => {
     setWeekDays(days);
+  }, []);
+
+  useEffect(() => {
+    const handleResize = () => {
+      // If the viewport is less than 768px wide, it mobile view
+      setIsMobileView(window.innerWidth < 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    handleResize();
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   return (
@@ -38,14 +54,17 @@ export default function WeeklyDay() {
       />
       {/* // Render the list of days */}
       <div>
+      {isMobileView ? (
+        <DayModal day={selectedDay} /> // Mobile view: Use modal
+      ) : (
+        <DayDetails day={selectedDay} currentWeek={currentWeek} /> // Large view: Show inline details
+      )}
         <ul style={styles.days}>
           {days.map((day) => (
             <DayButton key={day} day={day} setSelectedDay={setSelectedDay} />
           ))}
         </ul>
       </div>
-      {/* // Render the modal with details of selected day */}
-      <DayModal day={selectedDay} currentWeek={currentWeek} />
     </div>
   );
 }
@@ -57,17 +76,23 @@ const truncateText = (text, maxLength) => {
 const styles = {
   days: {
     display: "flex",
+    flexWrap: "wrap",
+    gab: "10px",
     justifyContent: "center",
-    alignItems: "center",
-    flexDirection: "column",
-    paddingRight: "20px",
+    // alignItems: "center",
+    // flexDirection: "column",
+    padding: "0",
+    // paddingRight: "20px",
+
   },
   dayButton: {
-    margin: "20px",
-    width: "200px",
+    margin: "10px",
+    minWidth: "150px",
     borderRadius: "5px",
-    backgroundColor: "#84cc16",
+    backgroundColor: "#d9c6d9",
     fontSize: "24px",
+    border: "1px solid #794d79",
+    color: "#794d79"
   },
 };
 
@@ -197,6 +222,30 @@ function DayModal({ day, currentWeek }) {
           </div>
         </div>
       </div>
+    </div>
+  );
+}
+function DayDetails({ day }) {
+ 
+  return (
+    <div style={{ padding: "20px", border: "1px solid #ccc", marginTop: "20px" }}>
+      <h2>{day}</h2>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora ex temporibus nam laborum voluptatibus,
+        soluta repudiandae doloremque, nobis recusandae tenetur, omnis cumque deserunt nesciunt illum enim.
+      </p>
+      <div >
+            <button type="button" className="btn btn-primary">
+              Save
+            </button>
+            <button
+              type="button"
+              className="btn btn-secondary"
+              data-bs-dismiss=""
+            >
+              Discard
+            </button>
+          </div>
     </div>
   );
 }
