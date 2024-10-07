@@ -1,4 +1,5 @@
 using Foodprep.API;
+using Foodprep.API.Models;
 using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
@@ -15,11 +16,7 @@ public class Program
 
         // Add services to the container.
         var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-        builder.Services.AddDbContext<MealContext>(options =>
-            options.UseMySql(connectionString, new MySqlServerVersion(new Version(8, 0, 21))));
-        builder.Services.AddDbContext<WeekContext>(options =>
-            options.UseMySql(connectionString, new MySqlServerVersion(new Version(8, 0, 21))));
-        builder.Services.AddDbContext<DayContext>(options =>
+        builder.Services.AddDbContext<FoodprepContext>(options =>
             options.UseMySql(connectionString, new MySqlServerVersion(new Version(8, 0, 21))));
 
         builder.Services.AddCors(options =>
@@ -60,38 +57,38 @@ public class Program
         app.Run("http://0.0.0.0:7055"); // Listen on all network interfaces
 
 
-        async Task<List<Meal>> GetAllMeals(MealContext db)
+        async Task<List<Meal>> GetAllMeals(FoodprepContext db)
         {
             return await db.Meals.ToListAsync();
         }
 
-        async Task<List<Days>> GetAllDays(DayContext dayContext)
+        async Task<List<Days>> GetAllDays(FoodprepContext dayContext)
         {
             return await dayContext.Days.ToListAsync();
         }
 
-        async Task<IResult> GetAllDaysByWeek(int week, DayContext dayContext)
+        async Task<IResult> GetAllDaysByWeek(int week, FoodprepContext dayContext)
         {
-            var days = await dayContext.Days.Where(d => d.weekID == week).ToListAsync();
+            var days = await dayContext.Days.Where(d => d.WeekID == week).ToListAsync();
             return days != null ? Results.Ok(days) : Results.NotFound();
         }
 
-        async Task<List<Week>> GetAllWeeks(WeekContext db)
+        async Task<List<Week>> GetAllWeeks(FoodprepContext db)
         {
             return await db.Weeks.ToListAsync();
         }
 
-async Task<IResult> GetWeekById(int id, WeekContext db)
+async Task<IResult> GetWeekById(int id, FoodprepContext db)
 {
     var week = await db.Weeks.FindAsync(id);
     return week != null ? Results.Ok(week) : Results.NotFound();
 }
 
-async Task<IResult> SaveDayMeal(DayMeal dayMeal, DayContext dayContext, MealContext mealContext)
+async Task<IResult> SaveDayMeal(DayMeal dayMeal, FoodprepContext dayContext, FoodprepContext mealContext)
 {
     // Ensure both day and meal exist in the database
-    var day = await dayContext.Days.FirstOrDefaultAsync(d => d.daysID == dayMeal.daysID);
-    var meal = await mealContext.Meals.FirstOrDefaultAsync(n => n.nummer == dayMeal.mealID);
+    var day = await dayContext.Days.FirstOrDefaultAsync(d => d.DaysID == dayMeal.DaysID);
+    var meal = await mealContext.Meals.FirstOrDefaultAsync(n => n.MealId == dayMeal.MealID);
 
     if (day == null || meal == null)
     {
