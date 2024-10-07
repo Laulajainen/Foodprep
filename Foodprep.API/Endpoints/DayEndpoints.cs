@@ -27,7 +27,7 @@ namespace Foodprep.API.Endpoints
         {
             // Ensure both day and meal exist in the database
             var day = await db.Days.FirstOrDefaultAsync(d => d.DaysID == dayMeal.DaysID);
-            var meal = await db.Meals.FirstOrDefaultAsync(n => n.Mealid == dayMeal.MealID);
+            var meal = await db.Meals.FirstOrDefaultAsync(n => n.MealId == dayMeal.MealID);
 
             if (day == null || meal == null)
             {
