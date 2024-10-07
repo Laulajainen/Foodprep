@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
-using Foodprep.API.Models;
+using Foodprep.API.Data;
 
 namespace Foodprep.API
 {

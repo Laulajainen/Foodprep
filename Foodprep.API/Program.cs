@@ -1,5 +1,5 @@
 using Foodprep.API;
-using Foodprep.API.Models;
+using Foodprep.API.Endpoints;
 using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
@@ -10,7 +10,6 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
 
         // Add services to the container.
-        // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
@@ -42,63 +41,11 @@ public class Program
 
         //app.UseHttpsRedirection();
 
-        app.MapGet("/api/Meals", GetAllMeals);
-
-        app.MapGet("/api/Days", GetAllDays);
-
-        app.MapGet("/api/Weeks", GetAllWeeks);
-
-        app.MapGet("/api/Weeks/{id}", GetWeekById);
-
-        app.MapGet("/api/Days/{week}", GetAllDaysByWeek);
-
-        app.MapPost("/api/DayMeals", SaveDayMeal);
+        // Map endpoints
+        app.MapMealEndpoints();
+        app.MapDayEndpoints();
+        app.MapWeekEndpoints();
 
         app.Run("http://0.0.0.0:7055"); // Listen on all network interfaces
-
-
-        async Task<List<Meal>> GetAllMeals(FoodprepContext db)
-        {
-            return await db.Meals.ToListAsync();
-        }
-
-        async Task<List<Days>> GetAllDays(FoodprepContext dayContext)
-        {
-            return await dayContext.Days.ToListAsync();
-        }
-
-        async Task<IResult> GetAllDaysByWeek(int week, FoodprepContext dayContext)
-        {
-            var days = await dayContext.Days.Where(d => d.WeekID == week).ToListAsync();
-            return days != null ? Results.Ok(days) : Results.NotFound();
-        }
-
-        async Task<List<Week>> GetAllWeeks(FoodprepContext db)
-        {
-            return await db.Weeks.ToListAsync();
-        }
-
-async Task<IResult> GetWeekById(int id, FoodprepContext db)
-{
-    var week = await db.Weeks.FindAsync(id);
-    return week != null ? Results.Ok(week) : Results.NotFound();
-}
-
-async Task<IResult> SaveDayMeal(DayMeal dayMeal, FoodprepContext dayContext, FoodprepContext mealContext)
-{
-    // Ensure both day and meal exist in the database
-    var day = await dayContext.Days.FirstOrDefaultAsync(d => d.DaysID == dayMeal.DaysID);
-    var meal = await mealContext.Meals.FirstOrDefaultAsync(n => n.MealId == dayMeal.MealID);
-
-    if (day == null || meal == null)
-    {
-        return Results.NotFound("Day or Meal not found");
     }
-
-    dayContext.DayMeals.Add(dayMeal); // Add the new dayMeal entry
-    await dayContext.SaveChangesAsync(); // Save changes to the database
-
-    return Results.Ok(dayMeal);
 }
-
-app.Run();

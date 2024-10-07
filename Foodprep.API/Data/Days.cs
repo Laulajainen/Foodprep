@@ -1,4 +1,4 @@
-﻿namespace Foodprep.API.Models
+﻿namespace Foodprep.API.Data
 {
     public class Days
     {
