@@ -43,11 +43,11 @@ namespace Foodprep.UpdateDB
 
                 foreach (var item in items)
                 {
-                    int nummer = item["nummer"]?.Value<int>() ?? 0;
-                    string namn = item["namn"]?.Value<string>() ?? string.Empty;
+                    int mealId = item["nummer"]?.Value<int>() ?? 0;
+                    string name = item["namn"]?.Value<string>() ?? string.Empty;
 
                     // Make an additional API call to check if the meal has ingredients
-                    string ingredientApiUrl = $"https://dataportal.livsmedelsverket.se/livsmedel/api/v1/livsmedel/{nummer}/ingredienser?sprak=1";
+                    string ingredientApiUrl = $"https://dataportal.livsmedelsverket.se/livsmedel/api/v1/livsmedel/{mealId}/ingredienser?sprak=1";
                     using (HttpClient client = new HttpClient())
                     {
                         HttpResponseMessage ingredientResponse = await client.GetAsync(ingredientApiUrl);
@@ -60,15 +60,15 @@ namespace Foodprep.UpdateDB
                             {
                                 // Insert into meals table
                                 string mealQuery = @"
-                                    INSERT INTO meals (nummer, namn)
-                                    VALUES (@nummer, @namn)
+                                    INSERT INTO meals (mealId, name)
+                                    VALUES (@mealId, @name)
                                     ON DUPLICATE KEY UPDATE
-                                        namn = VALUES(namn)";
+                                        Name = VALUES(Name)";
 
                                 using (MySqlCommand cmd = new MySqlCommand(mealQuery, conn))
                                 {
-                                    cmd.Parameters.AddWithValue("@nummer", nummer);
-                                    cmd.Parameters.AddWithValue("@namn", namn);
+                                    cmd.Parameters.AddWithValue("@MealId", mealId);
+                                    cmd.Parameters.AddWithValue("@Name", name);
 
                                     await cmd.ExecuteNonQueryAsync();
                                 }
@@ -76,48 +76,48 @@ namespace Foodprep.UpdateDB
                                 // Insert ingredients and maintain references
                                 foreach (var ingredientItem in ingredientItems)
                                 {
-                                    string ingredientNamn = ingredientItem["namn"]?.Value<string>() ?? string.Empty;
+                                    string ingredientName = ingredientItem["namn"]?.Value<string>() ?? string.Empty;
 
                                     string ingredientQuery = @"
-                                        INSERT INTO ingredients (namn)
-                                        VALUES (@namn)
+                                        INSERT INTO ingredients (name)
+                                        VALUES (@name)
                                         ON DUPLICATE KEY UPDATE
                                             id = LAST_INSERT_ID(id)";
 
                                     int ingredientId;
                                     using (MySqlCommand cmd = new MySqlCommand(ingredientQuery, conn))
                                     {
-                                        cmd.Parameters.AddWithValue("@namn", ingredientNamn);
+                                        cmd.Parameters.AddWithValue("@Name", ingredientName);
                                         await cmd.ExecuteNonQueryAsync();
                                         ingredientId = (int)cmd.LastInsertedId;
                                     }
 
                                     // Insert into meal_ingredients table to reference meals and ingredients
                                     string mealIngredientQuery = @"
-                                        INSERT INTO meal_ingredients (mealNummer, ingredientId)
-                                        VALUES (@mealNummer, @ingredientId)
+                                        INSERT INTO meal_ingredients (mealId, ingredientId)
+                                        VALUES (@mealId, @ingredientId)
                                         ON DUPLICATE KEY UPDATE
-                                            mealNummer = VALUES(mealNummer), ingredientId = VALUES(ingredientId)";
+                                            mealNummer = VALUES(mealId), ingredientId = VALUES(ingredientId)";
 
                                     using (MySqlCommand cmd = new MySqlCommand(mealIngredientQuery, conn))
                                     {
-                                        cmd.Parameters.AddWithValue("@mealNummer", nummer);
+                                        cmd.Parameters.AddWithValue("@mealId", mealId);
                                         cmd.Parameters.AddWithValue("@ingredientId", ingredientId);
 
                                         await cmd.ExecuteNonQueryAsync();
                                     }
                                 }
 
-                                Console.WriteLine($"Successfully updated or inserted meal with nummer: {nummer} and its ingredients.");
+                                Console.WriteLine($"Successfully updated or inserted meal with Mealid: {mealId} and its ingredients.");
                             }
                             else
                             {
-                                Console.WriteLine($"No ingredients found for meal with nummer: {nummer}");
+                                Console.WriteLine($"No ingredients found for meal with Mealid: {mealId}");
                             }
                         }
                         else
                         {
-                            Console.WriteLine($"Failed to fetch ingredients for meal with nummer: {nummer}");
+                            Console.WriteLine($"Failed to fetch ingredients for meal with Mealid: {mealId}");
                         }
                     }
                 }
