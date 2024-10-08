@@ -63,12 +63,12 @@ namespace Foodprep.UpdateDB
                                     INSERT INTO meals (mealId, name)
                                     VALUES (@mealId, @name)
                                     ON DUPLICATE KEY UPDATE
-                                        Name = VALUES(Name)";
+                                        name = VALUES(name)";
 
                                 using (MySqlCommand cmd = new MySqlCommand(mealQuery, conn))
                                 {
-                                    cmd.Parameters.AddWithValue("@MealId", mealId);
-                                    cmd.Parameters.AddWithValue("@Name", name);
+                                    cmd.Parameters.AddWithValue("@mealId", mealId);
+                                    cmd.Parameters.AddWithValue("@name", name);
 
                                     await cmd.ExecuteNonQueryAsync();
                                 }
@@ -82,12 +82,12 @@ namespace Foodprep.UpdateDB
                                         INSERT INTO ingredients (name)
                                         VALUES (@name)
                                         ON DUPLICATE KEY UPDATE
-                                            id = LAST_INSERT_ID(id)";
+                                            ingredientId = LAST_INSERT_ID(ingredientId)";
 
                                     int ingredientId;
                                     using (MySqlCommand cmd = new MySqlCommand(ingredientQuery, conn))
                                     {
-                                        cmd.Parameters.AddWithValue("@Name", ingredientName);
+                                        cmd.Parameters.AddWithValue("@name", ingredientName);
                                         await cmd.ExecuteNonQueryAsync();
                                         ingredientId = (int)cmd.LastInsertedId;
                                     }
@@ -97,7 +97,7 @@ namespace Foodprep.UpdateDB
                                         INSERT INTO meal_ingredients (mealId, ingredientId)
                                         VALUES (@mealId, @ingredientId)
                                         ON DUPLICATE KEY UPDATE
-                                            mealNummer = VALUES(mealId), ingredientId = VALUES(ingredientId)";
+                                            mealId = VALUES(mealId), ingredientId = VALUES(ingredientId)";
 
                                     using (MySqlCommand cmd = new MySqlCommand(mealIngredientQuery, conn))
                                     {
@@ -108,16 +108,16 @@ namespace Foodprep.UpdateDB
                                     }
                                 }
 
-                                Console.WriteLine($"Successfully updated or inserted meal with Mealid: {mealId} and its ingredients.");
+                                Console.WriteLine($"Successfully updated or inserted meal with mealId: {mealId} and its ingredients.");
                             }
                             else
                             {
-                                Console.WriteLine($"No ingredients found for meal with Mealid: {mealId}");
+                                Console.WriteLine($"No ingredients found for meal with mealId: {mealId}");
                             }
                         }
                         else
                         {
-                            Console.WriteLine($"Failed to fetch ingredients for meal with Mealid: {mealId}");
+                            Console.WriteLine($"Failed to fetch ingredients for meal with mealId: {mealId}");
                         }
                     }
                 }
