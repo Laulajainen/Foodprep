@@ -1,4 +1,4 @@
-namespace Foodprep.API
+namespace Foodprep.API.Data
 {
     public class Week
     {

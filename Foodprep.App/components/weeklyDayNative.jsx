@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { View, Text, Button, StyleSheet, TouchableOpacity, Modal } from 'react-native';
-import WeekNavigator from './weekNavigator';
+import WeekNavigator from './weekNavigatorNative';
 
 // List of days
 const days = [

@@ -2,7 +2,7 @@
 {
     public class DayMealDto
     {
-        public int dayID { get; set; }
-        public int mealID { get; set; }
+        public int DayID { get; set; }
+        public int MealID { get; set; }
     }
 }
