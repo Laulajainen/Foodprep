@@ -1,4 +1,4 @@
-using Foodprep.API;
+using Foodprep.API.Data;
 using Foodprep.API.Endpoints;
 using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;

@@ -1,8 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
-using Foodprep.API.Data;
 
-namespace Foodprep.API
+namespace Foodprep.API.Data
 {
     public class FoodprepContext : DbContext
     {
